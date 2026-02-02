@@ -9,6 +9,7 @@ export default function RootLayout() {
         tabBarStyle: {
           backgroundColor: "#262626",
           borderColor: "#525252",
+          borderTopWidth: 1,
         },
       }}
     >

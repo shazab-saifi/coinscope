@@ -7,6 +7,7 @@ export default function Search() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "#171717",
       }}
     >
       <Text>Search</Text>
