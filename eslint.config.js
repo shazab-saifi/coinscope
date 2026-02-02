@@ -7,14 +7,13 @@ module.exports = defineConfig([
   expoConfig,
   eslintPluginPrettierRecommended,
   {
-    ignores: ["dist/*", ".expo/*", "node_modules/*", "assets/*"],
+    ignores: ["dist/*", ".expo/*", "node_modules/*", "assets/*", ".husky/*"],
   },
   {
     rules: {
       "prettier/prettier": "error",
       "arrow-body-style": "off",
       "prefer-arrow-callback": "off",
-      "@typescript-eslint/no-unused-vars": "error",
     },
   },
 ]);
