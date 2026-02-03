@@ -2,9 +2,9 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": false,
-    "source.organizeImports": false,
-    "source.sortMembers": false
+    "source.fixAll.eslint": "never",
+    "source.organizeImports": "never",
+    "source.sortMembers": "never"
   },
   "eslint.validate": ["javascript", "typescript", "typescriptreact"]
 }

@@ -7,7 +7,7 @@ export default function Watchlist() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#171717",
+        backgroundColor: "#0a0a0a",
       }}
     >
       <Text>Watchlist</Text>
