@@ -12,3 +12,17 @@ export type Coin = {
   symbol: string;
   price_change_percentage_24h: string;
 };
+
+export type TrendingCoin = {
+  id: string;
+  name: string;
+  symbol: string;
+  image: string;
+  rank: number;
+  priceUsd: number;
+  change24h: number;
+};
+
+export type SearchResult = Omit<TrendingCoin, "priceUsd" | "change24h"> & {
+  slug: string;
+};

@@ -11,7 +11,7 @@ export default function CoinCard({ item }: { item: Coin }) {
         <Image source={{ uri: item.image }} className="size-10 rounded-full" />
 
         <View>
-          <Text className="max-w-[200px] truncate text-lg font-semibold text-white">
+          <Text className="max-w-[164px] text-lg font-semibold text-white">
             {item.name}
           </Text>
           <Text className="uppercase text-neutral-400">{item.symbol}</Text>
@@ -25,7 +25,7 @@ export default function CoinCard({ item }: { item: Coin }) {
           <Feather
             name={isIncreasing ? "arrow-up-right" : "arrow-down-right"}
             size={16}
-            color={isIncreasing ? "green" : "red"}
+            color={isIncreasing ? "#22c55e" : "#ef4444"}
           />
           <Text className={isIncreasing ? "text-green-500" : "text-red-500"}>
             {parseInt(item.price_change_percentage_24h).toFixed(2)} %

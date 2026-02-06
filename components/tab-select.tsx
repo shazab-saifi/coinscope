@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
-import { MotiView } from "moti";
+import { AnimatePresence, MotiView } from "moti";
 
 type Props = {
   tabs: {
@@ -37,22 +37,24 @@ export default function TabSelect({ tabs }: Props) {
           </Pressable>
         ))}
       </View>
-      <MotiView
-        key={activeTab}
-        from={{
-          translateX: direction === "l" ? -100 : 100,
-          opacity: 0,
-        }}
-        animate={{ translateX: 0, opacity: 1 }}
-        exit={{
-          translateX: direction === "l" ? 100 : -100,
-          opacity: 0,
-        }}
-        transition={{ type: "timing" }}
-        style={{ flex: 1 }}
-      >
-        {tabs[activeTab].content}
-      </MotiView>
+      <AnimatePresence exitBeforeEnter={true}>
+        <MotiView
+          key={activeTab}
+          from={{
+            translateX: direction === "l" ? -100 : 100,
+            opacity: 0,
+          }}
+          animate={{ translateX: 0, opacity: 1 }}
+          exit={{
+            translateX: direction === "l" ? 100 : -100,
+            opacity: 0,
+          }}
+          transition={{ type: "timing" }}
+          style={{ flex: 1 }}
+        >
+          {tabs[activeTab].content}
+        </MotiView>
+      </AnimatePresence>
     </View>
   );
 }

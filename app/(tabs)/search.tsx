@@ -1,10 +1,18 @@
+import { RecentSearches } from "@/components";
 import { useDebounce } from "@/hooks/useDebounce";
 import { mapSearchResult } from "@/lib/mapper";
 import { SearchResult } from "@/lib/types";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { TextInput, View, Text, FlatList, Image } from "react-native";
+import {
+  TextInput,
+  View,
+  Text,
+  FlatList,
+  Image,
+  Pressable,
+} from "react-native";
 
 const fetchSearchResult = async (
   debounceQuery: string
@@ -26,6 +34,7 @@ const fetchSearchResult = async (
 export default function Search() {
   const [query, setQuery] = useState<string>("");
   const debounceQuery = useDebounce(query, 500);
+  const [isFocus, setIsFocus] = useState<boolean>(false);
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["searchedCoin", debounceQuery],
     queryFn: () => fetchSearchResult(debounceQuery),
@@ -44,16 +53,32 @@ export default function Search() {
   }
 
   return (
-    <View className="h-full bg-neutral-950 px-4">
+    <View className="h-full bg-neutral-950 px-4 pt-4">
       <View className="items-center bg-neutral-950">
         <View className="mt-6 flex-row items-center gap-2">
-          <View className="flex-1 flex-row items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900 px-4 py-1">
+          <View
+            className={`flex-1 flex-row items-center gap-2 rounded-full border-2 bg-neutral-900 px-4 py-1 ${isFocus ? "border-blue-500" : "border-neutral-800"}`}
+          >
             <Ionicons name="search" size={20} color="white" />
             <TextInput
               onChangeText={(text) => setQuery(text)}
               placeholder="Search Coin"
-              className="flex-1 text-white outline-none placeholder:text-neutral-400"
+              className="flex-1 text-lg text-white"
+              value={query}
+              placeholderTextColor="#a3a3a3"
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
             />
+            <Pressable
+              onPress={() => {
+                setQuery("");
+                setIsFocus(false);
+              }}
+            >
+              {query.length > 0 && (
+                <Ionicons name="close-outline" size={24} color="white" />
+              )}
+            </Pressable>
           </View>
         </View>
       </View>
@@ -85,6 +110,11 @@ export default function Search() {
                 <Ionicons name="open-outline" color="white" size={20} />
               </View>
             )}
+          />
+        )}
+        {query.length === 0 && (
+          <RecentSearches
+            {...(debounceQuery ? { value: debounceQuery } : {})}
           />
         )}
       </View>

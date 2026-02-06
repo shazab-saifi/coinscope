@@ -17,9 +17,7 @@ async function fetchCoins(pageParam = 1): Promise<Coin[]> {
   );
 
   const res = await coins.json();
-  const neededData = coinMapper(res);
-
-  return neededData;
+  return coinMapper(res);
 }
 
 export default function TopCoins() {
@@ -35,7 +33,7 @@ export default function TopCoins() {
     initialPageParam: 1,
     queryFn: ({ pageParam }) => fetchCoins(pageParam),
     getNextPageParam: (lastPage, allPages) => {
-      if (lastPage.length < 20) {
+      if (lastPage.length < 20 || allPages.length === 20) {
         return;
       }
 
@@ -44,7 +42,7 @@ export default function TopCoins() {
   });
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={{ flex: 1 }}>
       <FlashList
         data={data?.pages.flat() ?? []}
         keyExtractor={(item: Coin) => item.id}
