@@ -38,7 +38,7 @@ export default function Search() {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["searchedCoin", debounceQuery],
     queryFn: () => fetchSearchResult(debounceQuery),
-    enabled: !!debounceQuery,
+    enabled: debounceQuery.length > 1,
   });
 
   if (isError) {
@@ -87,9 +87,19 @@ export default function Search() {
           <View className="flex flex-1 items-center justify-center">
             <Text className="text-center text-white">Loading...</Text>
           </View>
+        ) : debounceQuery.length > 1 && (data ?? []).length === 0 ? (
+          <View className="flex flex-1 items-center justify-center px-6">
+            <Ionicons name="search-outline" size={48} color="#525252" />
+            <Text className="mt-3 text-center text-lg font-medium text-white">
+              Couldn&apos;t find &quot;{debounceQuery}&quot;
+            </Text>
+            <Text className="mt-1 text-center text-neutral-400">
+              Try a different search term or check the spelling
+            </Text>
+          </View>
         ) : (
           <FlatList
-            data={data}
+            data={data ?? []}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <View className="mt-3 flex-row items-center justify-between rounded-2xl px-4 py-2">
