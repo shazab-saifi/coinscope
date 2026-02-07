@@ -21,13 +21,13 @@ export default function TabSelect({ tabs }: Props) {
   };
 
   return (
-    <View className="flex-1 gap-8">
+    <View className="flex-1 gap-4">
       <View className="flex-row items-center gap-4">
         {tabs.map((tab, idx) => (
           <Pressable
             key={idx}
             onPress={() => handleDirection(idx)}
-            className={`rounded-full px-6 py-3 ${activeTab === idx ? "bg-neutral-100" : "bg-neutral-800"}`}
+            className={`rounded-full px-5 py-2.5 ${activeTab === idx ? "bg-neutral-100" : "bg-neutral-800"}`}
           >
             <Text
               className={`text-lg font-semibold ${activeTab === idx ? "text-neutral-950" : "text-neutral-100"}`}

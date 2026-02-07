@@ -2,6 +2,7 @@ import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
 import { Text, View, RefreshControl, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import CoinSkeleton from "./coin-skeleton";
 import { mapTrendingCoins } from "@/lib/mapper";
 import { TrendingCoin } from "@/lib/types";
 
@@ -36,8 +37,10 @@ export default function TrendingCoins() {
 
   if (isLoading) {
     return (
-      <View>
-        <Text className="text-white">Loading...</Text>
+      <View style={{ flex: 1 }} className="bg-neutral-950">
+        {Array.from({ length: 12 }).map((_, i) => (
+          <CoinSkeleton key={i} />
+        ))}
       </View>
     );
   }

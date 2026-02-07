@@ -1,4 +1,5 @@
 import CoinCard from "./coin-card";
+import CoinSkeleton from "./coin-skeleton";
 import TabSelect from "./tab-select";
 import TopCoin from "./top-coins";
 import TrendingCoins from "./trending-coins";
@@ -7,6 +8,7 @@ import RecentSearches from "./recent-searches";
 
 export {
   CoinCard,
+  CoinSkeleton,
   TabSelect,
   TopCoin,
   TrendingCoins,

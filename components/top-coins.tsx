@@ -3,6 +3,7 @@ import { Coin } from "@/lib/types";
 import { FlashList } from "@shopify/flash-list";
 import { ActivityIndicator, RefreshControl, View } from "react-native";
 import CoinCard from "./coin-card";
+import CoinSkeleton from "./coin-skeleton";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 async function fetchCoins(pageParam = 1): Promise<Coin[]> {
@@ -28,6 +29,7 @@ export default function TopCoins() {
     isFetchingNextPage,
     refetch,
     isRefetching,
+    isLoading,
   } = useInfiniteQuery({
     queryKey: ["coins"],
     initialPageParam: 1,
@@ -40,6 +42,16 @@ export default function TopCoins() {
       return allPages.length + 1;
     },
   });
+
+  if (isLoading) {
+    return (
+      <View className="flex-1 bg-neutral-950">
+        {Array.from({ length: 12 }).map((_, i) => (
+          <CoinSkeleton key={i} />
+        ))}
+      </View>
+    );
+  }
 
   return (
     <View style={{ flex: 1 }}>

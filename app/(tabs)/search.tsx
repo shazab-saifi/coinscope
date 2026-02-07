@@ -84,8 +84,22 @@ export default function Search() {
       </View>
       <View className="flex-1">
         {isLoading ? (
-          <View className="flex flex-1 items-center justify-center">
-            <Text className="text-center text-white">Loading...</Text>
+          <View className="mt-4 flex-1">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <View
+                key={i}
+                className="mt-3 flex-row items-center justify-between rounded-2xl px-4 py-2"
+              >
+                <View className="flex-row items-center gap-4">
+                  <View className="size-10 rounded-full bg-neutral-800" />
+                  <View className="gap-2">
+                    <View className="h-[18px] w-40 rounded bg-neutral-800" />
+                    <View className="h-3.5 w-14 rounded bg-neutral-800" />
+                  </View>
+                </View>
+                <View className="size-5 rounded-full bg-neutral-800" />
+              </View>
+            ))}
           </View>
         ) : debounceQuery.length > 1 && (data ?? []).length === 0 ? (
           <View className="flex flex-1 items-center justify-center px-6">
@@ -101,6 +115,7 @@ export default function Search() {
           <FlatList
             data={data ?? []}
             keyExtractor={(item) => item.id}
+            className="mt-4"
             renderItem={({ item }) => (
               <View className="mt-3 flex-row items-center justify-between rounded-2xl px-4 py-2">
                 <View className="flex-row items-center gap-4">
