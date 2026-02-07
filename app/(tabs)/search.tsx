@@ -115,6 +115,7 @@ export default function Search() {
         {query.length === 0 && (
           <RecentSearches
             {...(debounceQuery ? { value: debounceQuery } : {})}
+            setQuery={setQuery}
           />
         )}
       </View>
