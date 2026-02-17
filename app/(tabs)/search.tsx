@@ -85,7 +85,7 @@ export default function Search() {
       <View className="flex-1">
         {isLoading ? (
           <View className="mt-4 flex-1">
-            {Array.from({ length: 8 }).map((_, i) => (
+            {Array.from({ length: 12 }).map((_, i) => (
               <View
                 key={i}
                 className="mt-3 flex-row items-center justify-between rounded-2xl px-4 py-2"
