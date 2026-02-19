@@ -1,4 +1,5 @@
 import { CloseButton, StateButton } from "@/components";
+import { useAuth } from "@/providers/auth-provider";
 import { supabase } from "@/lib/supabase";
 import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -20,6 +21,7 @@ export default function OtpScreen() {
   const isDisabled = otp.some((digit) => digit === "");
   const { email } = useLocalSearchParams();
   const router = useRouter();
+  const { setSkippedAuth } = useAuth();
   const [isVarifying, setIsVerifying] = useState(false);
 
   useEffect(() => {
@@ -85,6 +87,11 @@ export default function OtpScreen() {
     toast.success("Sign in Successfully!");
   };
 
+  const handleSkipAuth = async () => {
+    await setSkippedAuth(true);
+    router.replace("/(tabs)");
+  };
+
   return (
     <View className="relative flex-1 items-center justify-center bg-black px-6">
       <Image
@@ -145,7 +152,7 @@ export default function OtpScreen() {
           </Pressable>
         </View>
       </View>
-      <CloseButton />
+      <CloseButton handlerFn={handleSkipAuth} />
     </View>
   );
 }

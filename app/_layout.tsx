@@ -1,14 +1,16 @@
-import { Stack, useRouter, useSegments } from "expo-router";
+import { Stack } from "expo-router";
 import "./global.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as SplashScreen from "expo-splash-screen";
 import { AuthProvider, useAuth } from "@/providers/auth-provider";
 import { useEffect, useMemo } from "react";
+import { Toaster } from "sonner-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-void SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync();
 
 function RootNavigator() {
-  const { session, isLoading } = useAuth();
+  const { session, isLoading, hasSkippedAuth, isSkipAuthLoading } = useAuth();
   const queryClient = useMemo(
     () =>
       new QueryClient({
@@ -20,31 +22,29 @@ function RootNavigator() {
       }),
     []
   );
-  const segments = useSegments();
-  const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading) {
-      const firstSegment = segments[0];
-      const isInTabsGroup = firstSegment === "(tabs)";
-      const isInLoginScreen = firstSegment === "login";
-
-      if (!session && !isInLoginScreen) {
-        router.replace("/login");
-      } else if (session && !isInTabsGroup) {
-        router.replace("/(tabs)");
-      }
-
-      void SplashScreen.hideAsync();
+    if (!isLoading && !isSkipAuthLoading) {
+      SplashScreen.hideAsync();
     }
-  }, [session, isLoading, segments, router]);
+  }, [isLoading, isSkipAuthLoading]);
+
+  if (isLoading || isSkipAuthLoading) return null;
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="login" />
-        <Stack.Screen name="(tabs)" />
-      </Stack>
+      <GestureHandlerRootView>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Protected guard={!!session || hasSkippedAuth}>
+            <Stack.Screen name="(tabs)" />
+          </Stack.Protected>
+          <Stack.Protected guard={!session && !hasSkippedAuth}>
+            <Stack.Screen name="login" />
+            <Stack.Screen name="otp" />
+          </Stack.Protected>
+        </Stack>
+        <Toaster position="top-center" />
+      </GestureHandlerRootView>
     </QueryClientProvider>
   );
 }

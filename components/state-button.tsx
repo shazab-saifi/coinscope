@@ -15,7 +15,7 @@ export default function StateButton({
     <Pressable
       disabled={isDisabled}
       onPress={handlerFn}
-      className={`w-[78vw] max-w-xs items-center justify-center rounded-xl py-3 ${!isDisabled ? "bg-indigo-400" : "bg-indigo-400/50"}`}
+      className={`w-[80vw] max-w-xs items-center justify-center rounded-xl py-3 ${!isDisabled ? "bg-indigo-400" : "bg-indigo-400/50"}`}
     >
       {isLoading ? (
         <ActivityIndicator color="black" size={24} />
