@@ -1,4 +1,4 @@
-import { CloseButton, StateButton } from "@/components";
+import { CloseButton, ResendOtp, StateButton } from "@/components";
 import { useAuth } from "@/providers/auth-provider";
 import { supabase } from "@/lib/supabase";
 import { Image } from "expo-image";
@@ -9,7 +9,6 @@ import {
   Text,
   TextInput,
   View,
-  Pressable,
   TextInputKeyPressEventData,
 } from "react-native";
 import { toast } from "sonner-native";
@@ -81,6 +80,7 @@ export default function OtpScreen() {
     if (error) {
       console.log("Error while verifying opt: ", error.message);
       toast.error(error.message);
+      return;
     }
 
     router.replace("/(tabs)");
@@ -104,7 +104,7 @@ export default function OtpScreen() {
             We&apos;ve sent you an OTP
           </Text>
           <Text className="max-w-[224px] text-center font-semibold text-neutral-400">
-            Enter the OTP we&apos;ve sent you on your email address.
+            Enter the OTP we&apos;ve sent on your email {email}
           </Text>
         </View>
         <View>
@@ -127,30 +127,17 @@ export default function OtpScreen() {
             ))}
           </View>
         </View>
-        <View className="flex-row items-center gap-1">
-          <Text className="text-sm font-semibold text-neutral-400">
-            Otp is valid till
-          </Text>
-          <Text className="text-sm font-semibold text-indigo-400">
-            00:{countDown.toString().padStart(2, "0")}
-          </Text>
-        </View>
+        <ResendOtp
+          countDown={countDown}
+          setCountDown={setCountDown}
+          email={email as string}
+        />
         <StateButton
           isLoading={isVarifying}
           isDisabled={isDisabled}
           handlerFn={handleOtpVarification}
           text="Log In"
         />
-        <View className="flex-row items-center gap-1">
-          <Text className="text-sm font-semibold text-neutral-400">
-            Didn&apos;t recieve an OTP?
-          </Text>
-          <Pressable onPress={() => setCountDown(59)}>
-            <Text className="text-sm font-semibold text-indigo-400 underline">
-              Resend OTP
-            </Text>
-          </Pressable>
-        </View>
       </View>
       <CloseButton handlerFn={handleSkipAuth} />
     </View>

@@ -37,7 +37,6 @@ export default function LoginScreen() {
   };
 
   const handleSkipAuth = async () => {
-    console.log("Pressed closed");
     await setSkippedAuth(true);
     router.replace("/(tabs)");
   };

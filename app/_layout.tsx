@@ -6,6 +6,7 @@ import { AuthProvider, useAuth } from "@/providers/auth-provider";
 import { useEffect, useMemo } from "react";
 import { Toaster } from "sonner-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { View } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -52,7 +53,9 @@ function RootNavigator() {
 export default function RootLayout() {
   return (
     <AuthProvider>
-      <RootNavigator />
+      <View style={{ flex: 1, backgroundColor: "#0a0a0a" }}>
+        <RootNavigator />
+      </View>
     </AuthProvider>
   );
 }

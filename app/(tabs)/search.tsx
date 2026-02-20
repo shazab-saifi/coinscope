@@ -57,7 +57,7 @@ export default function Search() {
       <View className="items-center bg-neutral-950">
         <View className="mt-6 flex-row items-center gap-2">
           <View
-            className={`flex-1 flex-row items-center gap-2 rounded-full border-2 bg-neutral-900 px-4 py-1 ${isFocus ? "border-blue-500" : "border-neutral-800"}`}
+            className={`flex-1 flex-row items-center gap-2 rounded-full border-2 bg-neutral-900 px-4 py-1 ${isFocus ? "border-indigo-400" : "border-neutral-800"}`}
           >
             <Ionicons name="search" size={20} color="white" />
             <TextInput

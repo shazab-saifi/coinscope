@@ -75,7 +75,7 @@ export default function RecentSearches({
           onPress={clearSearches}
           className="items-center rounded-full px-4 py-2 active:bg-neutral-900"
         >
-          <Text className="font-semibold text-blue-500">Clear</Text>
+          <Text className="font-semibold text-indigo-400">Clear</Text>
         </Pressable>
       </View>
 

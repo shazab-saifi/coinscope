@@ -8,6 +8,7 @@ import RecentSearches from "./recent-searches";
 import StateButton from "./state-button";
 import CloseButton from "./close-button";
 import LabeledInput from "./labeled-input";
+import ResendOtp from "./otp-screen/resend-otp";
 
 export {
   CoinCard,
@@ -20,4 +21,5 @@ export {
   StateButton,
   CloseButton,
   LabeledInput,
+  ResendOtp,
 };
