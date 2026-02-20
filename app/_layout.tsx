@@ -44,7 +44,7 @@ function RootNavigator() {
             <Stack.Screen name="otp" />
           </Stack.Protected>
         </Stack>
-        <Toaster position="top-center" />
+        <Toaster position="top-center" style={{ backgroundColor: "#171717" }} />
       </GestureHandlerRootView>
     </QueryClientProvider>
   );

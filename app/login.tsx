@@ -4,14 +4,12 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner-native";
 import { useRouter } from "expo-router";
-import { CloseButton, LabeledInput } from "@/components";
-import { useAuth } from "@/providers/auth-provider";
+import { CloseButton, LabeledInput, ScreenHeading } from "@/components";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const router = useRouter();
-  const { setSkippedAuth } = useAuth();
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleEmailSubmit = async () => {
@@ -36,11 +34,6 @@ export default function LoginScreen() {
     });
   };
 
-  const handleSkipAuth = async () => {
-    await setSkippedAuth(true);
-    router.replace("/(tabs)");
-  };
-
   return (
     <View className="relative flex-1 items-center justify-center bg-black px-6">
       <Image
@@ -48,9 +41,7 @@ export default function LoginScreen() {
         style={{ width: 42, height: 42, marginBottom: 32 }}
       />
       <View className="items-center gap-5">
-        <Text className="mb-3 text-3xl font-bold text-white">
-          Log In or Sign Up
-        </Text>
+        <ScreenHeading heading="Log In or Sign Up" />
         <LabeledInput
           value={email}
           setValue={setEmail}
@@ -77,7 +68,7 @@ export default function LoginScreen() {
       <Text className="mt-5 max-w-[80%] text-sm text-neutral-500">
         Skip login at the top right, but some features will be limited.
       </Text>
-      <CloseButton handlerFn={handleSkipAuth} />
+      <CloseButton />
     </View>
   );
 }

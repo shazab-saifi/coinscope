@@ -1,5 +1,4 @@
-import { CloseButton, ResendOtp, StateButton } from "@/components";
-import { useAuth } from "@/providers/auth-provider";
+import { CloseButton, Headings, ResendOtp, StateButton } from "@/components";
 import { supabase } from "@/lib/supabase";
 import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -20,7 +19,6 @@ export default function OtpScreen() {
   const isDisabled = otp.some((digit) => digit === "");
   const { email } = useLocalSearchParams();
   const router = useRouter();
-  const { setSkippedAuth } = useAuth();
   const [isVarifying, setIsVerifying] = useState(false);
 
   useEffect(() => {
@@ -40,8 +38,6 @@ export default function OtpScreen() {
   const handleOnChange = (text: string, index: number) => {
     if (text.length > 1) {
       const pasted = text.slice(0, otp.length).split("");
-      console.log(pasted);
-      console.log(text);
       setOtp(pasted);
 
       if (inputRefs.current) {
@@ -87,11 +83,6 @@ export default function OtpScreen() {
     toast.success("Sign in Successfully!");
   };
 
-  const handleSkipAuth = async () => {
-    await setSkippedAuth(true);
-    router.replace("/(tabs)");
-  };
-
   return (
     <View className="relative flex-1 items-center justify-center bg-black px-6">
       <Image
@@ -99,14 +90,7 @@ export default function OtpScreen() {
         style={{ width: 42, height: 42, marginBottom: 32 }}
       />
       <View className="items-center gap-5">
-        <View className="mb-3 items-center">
-          <Text className="mb-2 text-center text-3xl font-bold text-white">
-            We&apos;ve sent you an OTP
-          </Text>
-          <Text className="max-w-[224px] text-center font-semibold text-neutral-400">
-            Enter the OTP we&apos;ve sent on your email {email}
-          </Text>
-        </View>
+        <Headings email={email as string} />
         <View>
           <Text className="mb-1 text-sm font-semibold text-white">OTP</Text>
           <View className="w-[80vw] flex-row items-center gap-2">
@@ -139,7 +123,7 @@ export default function OtpScreen() {
           text="Log In"
         />
       </View>
-      <CloseButton handlerFn={handleSkipAuth} />
+      <CloseButton />
     </View>
   );
 }
