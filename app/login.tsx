@@ -1,10 +1,15 @@
-import { ActivityIndicator, Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { Image } from "expo-image";
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner-native";
 import { useRouter } from "expo-router";
-import { CloseButton, LabeledInput, ScreenHeading } from "@/components";
+import {
+  CloseButton,
+  LabeledInput,
+  ScreenHeading,
+  StateButton,
+} from "@/components";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -53,17 +58,12 @@ export default function LoginScreen() {
           autoComplete="email"
           placeholder="Enter your email"
         />
-        <Pressable
-          onPress={handleEmailSubmit}
-          disabled={!isValidEmail}
-          className={`w-[78vw] max-w-xs items-center justify-center rounded-xl py-3 ${isValidEmail ? "bg-indigo-400" : "bg-indigo-400/50"}`}
-        >
-          {isSendingEmail ? (
-            <ActivityIndicator color="black" size={24} />
-          ) : (
-            <Text className="text-lg font-semibold">Continue with email</Text>
-          )}
-        </Pressable>
+        <StateButton
+          text="Continue with email"
+          isDisabled={!isValidEmail}
+          handlerFn={handleEmailSubmit}
+          isLoading={isSendingEmail}
+        />
       </View>
       <Text className="mt-5 max-w-[80%] text-sm text-neutral-500">
         Skip login at the top right, but some features will be limited.

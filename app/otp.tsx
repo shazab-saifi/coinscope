@@ -3,13 +3,7 @@ import { supabase } from "@/lib/supabase";
 import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import {
-  NativeSyntheticEvent,
-  Text,
-  TextInput,
-  View,
-  TextInputKeyPressEventData,
-} from "react-native";
+import { Text, TextInput, View } from "react-native";
 import { toast } from "sonner-native";
 
 export default function OtpScreen() {
@@ -55,11 +49,8 @@ export default function OtpScreen() {
     }
   };
 
-  const handleOnKeyPress = (
-    event: NativeSyntheticEvent<TextInputKeyPressEventData>,
-    index: number
-  ) => {
-    if (event.nativeEvent.key === "Backspace" && index > 0) {
+  const handleOnKeyPress = (key: string, index: number) => {
+    if (key === "Backspace" && index > 0) {
       inputRefs.current[index - 1].focus();
     }
   };
@@ -79,8 +70,7 @@ export default function OtpScreen() {
       return;
     }
 
-    router.replace("/(tabs)");
-    toast.success("Sign in Successfully!");
+    router.replace("/onboarding");
   };
 
   return (
@@ -104,8 +94,11 @@ export default function OtpScreen() {
                   }
                 }}
                 value={digit}
+                maxLength={1}
                 onChangeText={(text) => handleOnChange(text, idx)}
-                onKeyPress={(event) => handleOnKeyPress(event, idx)}
+                onKeyPress={(event) =>
+                  handleOnKeyPress(event.nativeEvent.key, idx)
+                }
                 className="h-16 flex-1 rounded-xl border-2 border-neutral-900 bg-neutral-950 px-4 py-1 text-center text-xl text-white focus:border-indigo-400"
               />
             ))}

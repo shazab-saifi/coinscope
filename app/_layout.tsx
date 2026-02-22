@@ -43,6 +43,7 @@ function RootNavigator() {
             <Stack.Screen name="login" />
             <Stack.Screen name="otp" />
           </Stack.Protected>
+          <Stack.Screen name="onboarding" />
         </Stack>
         <Toaster position="top-center" style={{ backgroundColor: "#171717" }} />
       </GestureHandlerRootView>
